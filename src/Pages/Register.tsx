@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, memo } from "react";
 import { User, Mail, Lock, Eye, EyeOff, Sparkles, CheckCircle, AlertCircle, Loader, ArrowRight, Shield, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import { toast, Toaster } from 'react-hot-toast';
 // Throttle utility function
 function throttle<T extends (...args: unknown[]) => unknown>(func: T, limit: number): T {
   let lastFunc: ReturnType<typeof setTimeout>;
@@ -153,13 +153,48 @@ const handleRegister = useCallback(async (e: React.FormEvent) => {
       throw new Error(data.message || "Registration failed");
     }
 
-    alert("Registration successful!");
-    navigate("/login");
+    // Show success toast
+    toast.success('Registration successful! Redirecting to login...', {
+      duration: 4000,
+      position: 'top-center',
+      style: {
+        background: '#4BB543',
+        color: '#fff',
+        padding: '16px 24px',
+        borderRadius: '12px',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+      },
+      iconTheme: {
+        primary: '#fff',
+        secondary: '#4BB543',
+      },
+    });
+
+    // Navigate after a short delay
+    setTimeout(() => {
+      navigate("/login");
+    }, 2000);
   } catch (err: unknown) {
     if (err instanceof Error) {
       setError(err.message);
+      // Show error toast
+      toast.error(err.message, {
+        duration: 4000,
+        position: 'top-center',
+        style: {
+          background: '#FF3333',
+          color: '#fff',
+          padding: '16px 24px',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+        },
+      });
     } else {
       setError("An unknown error occurred.");
+      toast.error('An unknown error occurred', {
+        duration: 4000,
+        position: 'top-center',
+      });
     }
   } finally {
     setIsLoading(false);
@@ -172,6 +207,15 @@ const handleRegister = useCallback(async (e: React.FormEvent) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 relative overflow-hidden flex items-center justify-center p-4">
+      <Toaster 
+      toastOptions={{
+        className: '',
+        style: {
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(10px)',
+        },
+      }}
+    />
       {/* Static Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-10 left-10" />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Mail, Lock, Eye, EyeOff, Sparkles, AlertCircle, Loader, ArrowRight, Shield, Zap, Users, Github, Chrome } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 
 
 interface InputFieldProps {
@@ -93,31 +93,71 @@ const handleLogin = useCallback(async (e: React.FormEvent) => {
     // Store token and user data in localStorage
     localStorage.setItem("token", data.token);
     
-    // Store the entire user object if available, or specific fields
     if (data.user) {
       localStorage.setItem("user", JSON.stringify({
         id: data.user.id,
         username: data.user.username || data.user.name || data.user.email.split('@')[0],
         email: data.user.email,
-        // Add any other user fields you want to store
       }));
     } else {
-      // Fallback if user object isn't provided
       localStorage.setItem("user", JSON.stringify({
         username: email.split('@')[0],
         email: email
       }));
     }
 
-    alert("Login successful! Welcome back to SkillSync!");
+    // Show success toast
+    toast.success('Welcome back to SkillSync!', {
+      duration: 3000,
+      position: 'top-center',
+      style: {
+        background: 'rgba(74, 181, 67, 0.9)',
+        color: '#fff',
+        padding: '16px 24px',
+        borderRadius: '12px',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+      },
+      icon: <Sparkles className="w-5 h-5" />,
+      iconTheme: {
+        primary: '#fff',
+        secondary: '#4BB543',
+      },
+    });
 
-    // Navigate based on user role (if applicable)
-    navigate("/dashboard"); // Or "/admin" if needed
+    // Navigate after a short delay
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 1500);
   } catch (err: unknown) {
     if (err instanceof Error) {
       setError(err.message);
+      // Show error toast
+      toast.error(err.message, {
+        duration: 4000,
+        position: 'top-center',
+        style: {
+          background: 'rgba(239, 68, 68, 0.9)',
+          color: '#fff',
+          padding: '16px 24px',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+        },
+        icon: <AlertCircle className="w-5 h-5" />,
+        iconTheme: {
+          primary: '#fff',
+          secondary: '#EF4444',
+        },
+      });
     } else {
       setError("Login failed. Please try again.");
+      toast.error('Login failed. Please try again.', {
+        duration: 4000,
+        position: 'top-center',
+      });
     }
   } finally {
     setIsLoading(false);
@@ -145,6 +185,48 @@ const handleLogin = useCallback(async (e: React.FormEvent) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 relative overflow-hidden flex items-center justify-center p-4">
+      {/* Add Toaster component */}
+    <Toaster 
+      position="top-center"
+      gutter={12}
+      containerStyle={{
+        marginTop: '40px'
+      }}
+      toastOptions={{
+        success: {
+          duration: 3000,
+          style: {
+            background: 'rgba(74, 181, 67, 0.9)',
+            color: '#fff',
+            padding: '16px 24px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+          },
+          iconTheme: {
+            primary: '#fff',
+            secondary: '#4BB543',
+          },
+        },
+        error: {
+          duration: 4000,
+          style: {
+            background: 'rgba(239, 68, 68, 0.9)',
+            color: '#fff',
+            padding: '16px 24px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+          },
+          iconTheme: {
+            primary: '#fff',
+            secondary: '#EF4444',
+          },
+        },
+      }}
+    />
       {/* Static Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-10 left-10" />
