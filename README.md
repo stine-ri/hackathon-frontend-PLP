@@ -6,15 +6,15 @@
 
 ## 🔗 Live Links
 
-- 🌐 Frontend: [https://skillsync.vercel.app](https://skillsync.vercel.app)
-- ⚙️ Backend: [https://skillsync-api.onrender.com](https://skillsync-api.onrender.com)
+- 🌐 Frontend: [https://hackathon-frontend-plp.vercel.app/](https://hackathon-frontend-plp.vercel.app/)
+- ⚙️ Backend: [https://hackathon-backend-plp.onrender.com/](https://hackathon-backend-plp.onrender.com/)
 
 ---
 
 ## 📁 GitHub Repositories
 
-- 💻 Frontend Repo: [https://github.com/stine-ri/skillsync-frontend](https://github.com/stine-ri/skillsync-frontend)
-- 🧠 Backend Repo: [https://github.com/stine-ri/skillsync-backend](https://github.com/stine-ri/skillsync-backend)
+- 💻 Frontend Repo: [https://github.com/stine-ri/hackathon-frontend-PLP.git](https://github.com/stine-ri/hackathon-frontend-PLP.git)
+- 🧠 Backend Repo: [https://github.com/stine-ri/hackathon-backend-PLP.git](https://github.com/stine-ri/hackathon-backend-PLP.git)
 
 ---
 ## 🎯 Project Summary
