@@ -1,0 +1,16 @@
+/* print-styles.css */
+@media print {
+  .bg-gradient-to-r {
+    background: #7c3aed !important; /* purple-600 */
+  }
+  
+  .from-purple-600 {
+    background: #7c3aed !important;
+  }
+  
+  .to-pink-600 {
+    background: #db2777 !important;
+  }
+  
+  /* Add more overrides as needed */
+}

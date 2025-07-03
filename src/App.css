@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+/* Fix autofill styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 100px rgba(255, 255, 255, 0.05) inset !important;
+  -webkit-text-fill-color: white !important;
+  caret-color: white !important;
+}
+
+@supports not (color: oklch(0.5 0.2 180)) {
+  :root {
+    --primary-color: #8B5CF6;
+    --text-primary: #8B5CF6;
+    
+  }
+}
