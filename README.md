@@ -29,14 +29,6 @@ SkillSync was built for the **Vibe Coding Hackathon 2.0** under the theme **"Har
 
 The frontend of SkillSync provides the UI/UX for interacting with quizzes, resume tools, and user dashboards.
 
-## 🔗 Quick Links
-
-- 🌐 Live App: [https://skillsync.vercel.app](https://skillsync.vercel.app)
-- 💻 Frontend Repo: [https://github.com/stine-ri/skillsync-frontend](https://github.com/stine-ri/skillsync-frontend)
-- ⚙️ Backend API: [https://skillsync-api.onrender.com](https://skillsync-api.onrender.com)
-- 🧠 Backend Repo: [https://github.com/stine-ri/skillsync-backend](https://github.com/stine-ri/skillsync-backend)
-
----
 
 ## 🧠 Features
 
