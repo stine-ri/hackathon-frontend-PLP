@@ -34,12 +34,16 @@ The frontend of SkillSync provides the UI/UX for interacting with quizzes, resum
 
 ### 🎓 Education & Practice
 - ✅ **AI Quiz** — topic-based quizzes in MERN, Flutter, Dart, AI, and Software Testing  
-- ✅ **Mock Interviews** — personalized sessions with scoring and motivational feedback  
+
+- ✅ **Mock Interviews** — personalized sessions with scoring and motivational feedback 
+
 - ✅ **Progress Tracker** — see streaks, skills mastered, and learning history  
 
 ### 🚀 Career Growth
-- ✅ **Resume Builder** — clean, exportable resume based on user skills/goals  
-- ✅ **Windsurf AI Coach** — smart topic-based learning recommendations via Windsurf API  
+✅ Resume Builder — clean, exportable resume based on user skills and goals, downloadable as a PDF.
+
+- ✅ **Windsurf AI Coach** — smart topic-based learning recommendations via Windsurf API 
+
 - ✅ **AI Recommendations** — based on career goals + quiz/interview results  
 
 ### 🔒 Auth & Persistence

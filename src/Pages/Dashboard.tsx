@@ -60,6 +60,7 @@ interface QuickActionButtonProps {
   label: string;
   onClick: () => void;
 }
+
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const [aiData, setAiData] = useState<AIResponse | null>(null);
@@ -111,13 +112,30 @@ useEffect(() => {
   };
 }, []);
 
-  // In production environment, replace this with localStorage functions
+
   const loadUserData = () => {
-    // For production use:
-    // const savedStats = localStorage.getItem('userStats');
-    // const savedActivities = localStorage.getItem('userActivities');
-    // if (savedStats) setStats(JSON.parse(savedStats));
-    // if (savedActivities) setUserActivities(JSON.parse(savedActivities));
+    // Demo: Check if user is new by looking for a flag in localStorage
+  const isNewUser = !localStorage.getItem('hasVisitedBefore');
+  
+  if (isNewUser) {
+    // Initialize fresh stats for new user
+    setStats({
+      totalGoals: 0,
+      completedSkills: 0,
+      currentStreak: 1,
+      lastActive: "Just now",
+      lastLoginDate: new Date().toISOString(),
+      goalsHistory: [],
+      completedSkillsHistory: []
+    });
+    
+    setUserActivities([
+      { date: new Date().toISOString(), action: "Login", details: "First time dashboard access" }
+    ]);
+    
+    // Mark user as no longer new
+    localStorage.setItem('hasVisitedBefore', 'true');
+  } else {
     
     // Demo: Initialize with some sample data for demonstration
     const now = new Date();
@@ -135,16 +153,15 @@ useEffect(() => {
       { date: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(), action: "Goal Set", details: "Learn React fundamentals" },
       { date: new Date(now.getTime() - 5 * 60 * 60 * 1000).toISOString(), action: "Skill Completed", details: "JavaScript ES6" }
     ]);
+   }
   };
 
   const saveUserData = (newStats: DashboardStats, newActivities: UserActivity[]) => {
-    // For production use:
-    // localStorage.setItem('userStats', JSON.stringify(newStats));
-    // localStorage.setItem('userActivities', JSON.stringify(newActivities));
     
-    // For now, just update state
+  
     setStats(newStats);
     setUserActivities(newActivities);
+    localStorage.setItem('hasVisitedBefore', 'true');
   };
 
   const updateLastActive = () => {
@@ -164,12 +181,11 @@ useEffect(() => {
     const updatedActivities = [newActivity, ...userActivities].slice(0, 50); // Keep last 50 activities
     setUserActivities(updatedActivities);
     
-    // In production, save to localStorage here
-    // localStorage.setItem('userActivities', JSON.stringify(updatedActivities));
+    
   };
 
   const calculateStreak = (): number => {
-    if (userActivities.length === 0) return 1;
+    if (!userActivities || userActivities.length === 0) return 1;
     
     const today = new Date();
     const activities = userActivities.filter(activity => {
@@ -179,11 +195,11 @@ useEffect(() => {
       return diffDays <= 30; // Consider activities from last 30 days
     });
     
-    // Group activities by date
+         // Group activities by date
     const activityDates = new Set(
       activities.map(activity => 
-        new Date(activity.date).toDateString()
-      )
+      activity?.date ? new Date(activity.date).toDateString() : ''
+      ).filter(Boolean)
     );
     
     let streak = 0;
@@ -229,7 +245,7 @@ useEffect(() => {
       // Update stats and track activity
       const newStats = {
         ...stats,
-        totalGoals: stats.totalGoals + 1,
+        totalGoals: (stats.totalGoals || 0) + 1,
         lastActive: "Just now",
         goalsHistory: [...stats.goalsHistory, goal],
         currentStreak: calculateStreak()
@@ -251,9 +267,9 @@ useEffect(() => {
   const handleSkillCompleted = (skillName: string) => {
     const newStats = {
       ...stats,
-      completedSkills: stats.completedSkills + 1,
+      completedSkills: (stats.completedSkills || 0) + 1,
       lastActive: "Just now",
-      completedSkillsHistory: [...stats.completedSkillsHistory, skillName],
+      completedSkillsHistory: [...(stats.completedSkillsHistory || []), skillName],
       currentStreak: calculateStreak()
     };
     
