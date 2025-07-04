@@ -112,49 +112,71 @@ useEffect(() => {
   };
 }, []);
 
+// Helper function to get/set user ID
 
-  const loadUserData = () => {
-    //  Check if user is new by looking for a flag in localStorage
-  const isNewUser = !localStorage.getItem('hasVisitedBefore');
-  
-  if (isNewUser) {
-    // Initialize fresh stats for new user
-    setStats({
-      totalGoals: 0,
-      completedSkills: 0,
-      currentStreak: 1,
-      lastActive: "Just now",
-      lastLoginDate: new Date().toISOString(),
-      goalsHistory: [],
-      completedSkillsHistory: []
-    });
+  const getUserId = () => {
+    let userId = localStorage.getItem('userId');
     
-    setUserActivities([
-      { date: new Date().toISOString(), action: "Login", details: "First time dashboard access" }
-    ]);
+    // If new user, create an ID
+    if (!userId) {
+      userId = `user_${Date.now()}`; // Simple unique ID
+      localStorage.setItem('userId', userId);
+    }
     
-    // Mark user as no longer new
-    localStorage.setItem('hasVisitedBefore', 'true');
-  } else {
-    
-    //  Initialize with some sample data for demonstration
-    const now = new Date();
-    const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    
-    setStats(prev => ({
-      ...prev,
-      totalGoals: 3,
-      completedSkills: 12,
-      lastLoginDate: lastWeek.toISOString()
-    }));
-    
-    setUserActivities([
-      { date: new Date().toISOString(), action: "Login", details: "Dashboard accessed" },
-      { date: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(), action: "Goal Set", details: "Learn React fundamentals" },
-      { date: new Date(now.getTime() - 5 * 60 * 60 * 1000).toISOString(), action: "Skill Completed", details: "JavaScript ES6" }
-    ]);
-   }
+    return userId;
   };
+
+  // Define loadUserData before the useEffect that calls it
+  const loadUserData = () => {
+    const userId = getUserId();
+    const userKey = `dashboardData_${userId}`;
+    
+    // Try to load existing data
+    const savedData = localStorage.getItem(userKey);
+    
+    if (savedData) {
+      // Existing user - load their data
+      const { stats, activities } = JSON.parse(savedData);
+      setStats(stats);
+      setUserActivities(activities);
+    } else {
+      // New user - initialize empty data
+      const newStats = {
+        totalGoals: 0,
+        completedSkills: 0,
+        currentStreak: 1,
+        lastActive: "Just now",
+        lastLoginDate: new Date().toISOString(),
+        goalsHistory: [],
+        completedSkillsHistory: []
+      };
+      
+      const newActivities = [{
+        date: new Date().toISOString(), 
+        action: "Login", 
+        details: "First visit"
+      }];
+      
+      setStats(newStats);
+      setUserActivities(newActivities);
+      saveUserData(newStats, newActivities); // Save immediately
+    }
+  };
+
+  // Now this useEffect can safely call loadUserData
+  useEffect(() => {
+    loadUserData();
+    updateLastActive();
+    
+    // Get current time in Kenyan timezone (UTC+3)
+    const options = { timeZone: 'Africa/Nairobi' };
+    const kenyanTime = new Date().toLocaleString('en-US', options);
+    const hour = new Date(kenyanTime).getHours();
+    
+    if (hour < 12) setGreeting("Good morning");
+    else if (hour < 18) setGreeting("Good afternoon");
+    else setGreeting("Good evening");
+  }, []);
 
   const saveUserData = (newStats: DashboardStats, newActivities: UserActivity[]) => {
     
