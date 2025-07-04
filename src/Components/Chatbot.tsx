@@ -24,8 +24,8 @@ const ChatBot: React.FC = () => {
   const [greeting, setGreeting] = useState("");
   const [showSidebar, setShowSidebar] = useState(false);
 
-// Update the greeting effect to use Kenyan time
-// Update the greeting effect to use Kenyan time
+//  greeting effect to use Kenyan time
+
 useEffect(() => {
   const getKenyanGreeting = () => {
     try {

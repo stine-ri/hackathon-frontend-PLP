@@ -68,7 +68,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   // Optimized mouse movement handler
-  // Optimized mouse movement handler
+
   useEffect(() => {
     // Mouse movement handler removed as mousePosition state is unused
   }, []);

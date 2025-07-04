@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, memo } from "react";
 import { User, Mail, Lock, Eye, EyeOff, Sparkles, CheckCircle, AlertCircle, Loader, ArrowRight, Shield, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from 'react-hot-toast';
+
 // Throttle utility function
 function throttle<T extends (...args: unknown[]) => unknown>(func: T, limit: number): T {
   let lastFunc: ReturnType<typeof setTimeout>;
@@ -89,7 +90,7 @@ const Register: React.FC = () => {
   // Optimized mouse movement handler
   useEffect(() => {
     const handleMouseMove = throttle(() => {
-      // We'll remove the background animation completely for better performance
+      
     }, 50);
     
     window.addEventListener('mousemove', handleMouseMove);

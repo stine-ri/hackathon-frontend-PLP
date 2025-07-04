@@ -67,7 +67,7 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  // User-specific state management (in production, replace with localStorage)
+  // User-specific state management 
   const [stats, setStats] = useState<DashboardStats>({
     totalGoals: 0,
     completedSkills: 0,
@@ -114,7 +114,7 @@ useEffect(() => {
 
 
   const loadUserData = () => {
-    // Demo: Check if user is new by looking for a flag in localStorage
+    //  Check if user is new by looking for a flag in localStorage
   const isNewUser = !localStorage.getItem('hasVisitedBefore');
   
   if (isNewUser) {
@@ -137,7 +137,7 @@ useEffect(() => {
     localStorage.setItem('hasVisitedBefore', 'true');
   } else {
     
-    // Demo: Initialize with some sample data for demonstration
+    //  Initialize with some sample data for demonstration
     const now = new Date();
     const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     
@@ -539,7 +539,7 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* Floating Chat Button - Alternative for mobile/tablet */}
+      
       {/* Floating Chat Button - Visible on all screens */}
 <div className="fixed bottom-6 right-6 z-50">
   <button
@@ -637,7 +637,7 @@ const QuickActionButton: React.FC<QuickActionButtonProps> = ({
         </span>
       </button>
       
-      {/* Toaster component should be placed once in your app's root */}
+      
       <Toaster 
         toastOptions={{
           style: {
