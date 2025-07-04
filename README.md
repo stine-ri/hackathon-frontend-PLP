@@ -97,7 +97,7 @@ SkillSync uses **Windsurf**, an AI developer tool, to deliver personalized recom
 ## 🛠 Setup
 
 ```bash
-git clone https://github.com/stine-ri/skillsync-frontend
+git clone https://github.com/stine-ri/hackathon-frontend-PLP.git
 cd skillsync-frontend
 pnpm install
 pnpm run dev
